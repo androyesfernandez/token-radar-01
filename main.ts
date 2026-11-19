@@ -1,8 +1,9 @@
 // Token Launch Radar — entrypoint (Node 22, standard library only).
 //
 // Reads the sealed snapshot (/input/snapshot.json, or --input <file|dir>), fits the value model
-// in lib/model.ts on the snapshot's own tokenised protocols, ranks every protocol that records
-// no token, and writes the run's outputs:
+// in lib/model.ts on the snapshot's own tokenised protocols, validates that fit out of sample
+// (leave-one-out and a temporal split over the comps), ranks every protocol that records no
+// token, and writes the run's outputs:
 //   board.json    the ranked board (the gate reads this)
 //   data.js       the same board for the dashboard, as window.RADAR
 //   dashboard/    the static page, copied from this repository
@@ -88,9 +89,12 @@ writeFileSync(
   buildDossier(out, { text_max_bytes: TEXT_MAX_BYTES, screenshots: SCREENSHOT_CAPS, dashboard: DASHBOARD_CAPS }),
 );
 
+const loo = data.validation.loo.full;
 process.stdout.write(
   `token radar: ${snapshot.protocols.length} protocols, ${snapshot.watchlist.length} on the watchlist, ` +
     `${board.length} pre-token rows ranked (${data.stats.candidates} candidates, ${data.stats.products} products), ` +
     `${data.live.length} live comps shown for reference\n` +
+    `token radar: model validated leave-one-out on ${loo.n} comps: typical miss x${loo.typical_factor}, ` +
+    `${loo.within_2x_pct}% within 2x of actual market cap\n` +
     `token radar: wrote board.json, data.js, dashboard/ (${pageFiles.length} files), screenshots/ (${shots.length} images) and dossier.json under ${out}\n`,
 );
