@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Token Launch Radar — pre-token protocols ranked by implied value</title>
+<link rel="stylesheet" href="app.css">
+</head>
+<body>
+<header class="topbar">
+  <div class="brand">
+    <svg class="rings" viewBox="0 0 48 48" aria-hidden="true">
+      <circle cx="24" cy="24" r="21" fill="none" stroke-width="1.5"/>
+      <circle cx="24" cy="24" r="13.5" fill="none" stroke-width="1.5"/>
+      <circle cx="24" cy="24" r="6" fill="none" stroke-width="1.5"/>
+      <line x1="24" y1="24" x2="41" y2="9" stroke-width="2"/>
+      <circle cx="33.5" cy="15.5" r="2.6" class="blip"/>
+    </svg>
+    <div>
+      <h1>Token Launch Radar</h1>
+      <p class="tagline">Every protocol that records no token yet, ranked by what its token would be worth.</p>
+    </div>
+  </div>
+  <div class="topmeta">
+    <span id="asof" class="chip"></span>
+    <span id="modelchip" class="chip chip-accent"></span>
+  </div>
+</header>
+
+<section class="stats" id="stats" aria-label="Board summary"></section>
+
+<section class="controls" aria-label="Board controls">
+  <label class="search">
+    <span class="sr">Search protocols</span>
+    <input id="q" type="search" placeholder="Search by name or slug…" autocomplete="off">
+  </label>
+  <label>Category
+    <select id="f-category"></select>
+  </label>
+  <label>Chain
+    <select id="f-chain"></select>
+  </label>
+  <label>Sort by
+    <select id="f-sort">
+      <option value="rank">Radar rank</option>
+      <option value="implied">Implied value</option>
+      <option value="tvl">TVL</option>
+      <option value="chg">7d change</option>
+      <option value="mult">Peer multiple</option>
+      <option value="age">Age (tokenless days)</option>
+    </select>
+  </label>
+  <div class="segmented" role="group" aria-label="Protocol class">
+    <button data-cls="all" class="on">All pre-token</button>
+    <button data-cls="candidate">Launch candidates</button>
+    <button data-cls="watchlist">Watchlist</button>
+    <button data-cls="product">Products of live ecosystems</button>
+  </div>
+  <span id="count" class="count"></span>
+</section>
+
+<main class="layout">
+  <section class="boardwrap" aria-label="Ranked board">
+    <table class="board">
+      <thead>
+        <tr>
+          <th class="num" data-sort="rank">#</th>
+          <th>Protocol</th>
+          <th class="num" data-sort="tvl">TVL</th>
+          <th class="num" data-sort="chg">7d</th>
+          <th class="num" data-sort="implied">Implied value</th>
+          <th class="num" data-sort="mult">× TVL</th>
+          <th class="num" data-sort="age">Age</th>
+        </tr>
+      </thead>
+      <tbody id="rows"></tbody>
+    </table>
+    <p id="empty" class="empty" hidden>No protocol matches those filters. Loosen one and the radar sweeps again.</p>
+  </section>
+  <aside class="detail" id="detail" aria-label="Protocol detail"></aside>
+</main>
+
+<section class="model" id="model" aria-label="How the model works"></section>
+
+<section class="live" aria-label="Already trading">
+  <h2>Already trading — set aside, not ranked</h2>
+  <p class="lede">These protocols' tokens exist, so the market has already priced them. They are the radar's
+  comparison set: the model below is fitted on them, and they never take a rank from a protocol still waiting to launch.</p>
+  <div id="liverow" class="liverow"></div>
+</section>
+
+<footer>
+  <p id="source"></p>
+  <p>Implied values are this radar's own model claims — what a token would be worth if the protocol's record
+  stayed as it is. They are not predictions that a token will be issued, and not make.fun's claims.</p>
+</footer>
+
+<script src="../data.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
