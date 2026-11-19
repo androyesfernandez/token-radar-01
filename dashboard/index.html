@@ -17,17 +17,31 @@
       <circle cx="33.5" cy="15.5" r="2.6" class="blip"/>
     </svg>
     <div>
-      <h1>Token Launch Radar</h1>
-      <p class="tagline">Every protocol that records no token yet, ranked by what its token would be worth.</p>
+      <h1>TOKEN LAUNCH RADAR</h1>
+      <p class="tagline">Every protocol that records no token yet, ranked by what its token would be worth — priced by a model fitted on the ones that already launched, and validated out of sample.</p>
     </div>
   </div>
   <div class="topmeta">
     <span id="asof" class="chip"></span>
     <span id="modelchip" class="chip chip-accent"></span>
+    <span id="loochip" class="chip chip-amber"></span>
   </div>
 </header>
 
 <section class="stats" id="stats" aria-label="Board summary"></section>
+
+<section class="charts" aria-label="Board distribution and fitted curve">
+  <div class="chart">
+    <h3>Implied value distribution — the whole board</h3>
+    <div id="hist"></div>
+    <p class="chartnote" id="histnote"></p>
+  </div>
+  <div class="chart">
+    <h3>Fitted peer multiple by protocol size</h3>
+    <div id="curve"></div>
+    <p class="chartnote" id="curvenote"></p>
+  </div>
+</section>
 
 <section class="controls" aria-label="Board controls">
   <label class="search">
@@ -82,10 +96,16 @@
 
 <section class="model" id="model" aria-label="How the model works"></section>
 
+<section class="model validation" aria-label="Out-of-sample validation">
+  <h2>Validated out of sample — before it prices anything</h2>
+  <p class="lede" id="vallede"></p>
+  <div id="validation"></div>
+</section>
+
 <section class="live" aria-label="Already trading">
   <h2>Already trading — set aside, not ranked</h2>
   <p class="lede">These protocols' tokens exist, so the market has already priced them. They are the radar's
-  comparison set: the model below is fitted on them, and they never take a rank from a protocol still waiting to launch.</p>
+  comparison set: the model above is fitted and validated on them, and they never take a rank from a protocol still waiting to launch.</p>
   <div id="liverow" class="liverow"></div>
 </section>
 
